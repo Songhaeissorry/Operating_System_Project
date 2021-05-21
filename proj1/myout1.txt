@@ -1,5 +1,0 @@
-›total 64
--rwxr-xr-x  1 namjeonghun  staff  17868  3 28 16:53 a.out
--rw-r--r--  1 namjeonghun  staff      0  3 28 16:54 myout1.txt
--rw-r--r--@ 1 namjeonghun  staff   4321  3 28 16:44 os_project_1.c
--rw-r--r--  1 namjeonghun  staff    195  3 28 16:53 out1.txt
