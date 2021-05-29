@@ -82,7 +82,6 @@ static int dequeue(task_t *t){
         t->data = worktodo[head].data;
         head = tail = -1;
         queue_size--;
-        //제거하고 worker에 넘겨
     }
     else{
         t->function = worktodo[head].function;
@@ -122,13 +121,13 @@ static void *worker(void *param)
 int pool_submit(void (*f)(void *p), void *p)
 {
     pthread_mutex_lock(&mutex);
-    int failure;
+    int fail;
     task_t *task = (task_t*)malloc(sizeof(task_t));
     task->function = f;
-    task->data=p;
-    failure = enqueue(*task);
+    task->data = p;
+    fail = enqueue(*task);
     pthread_mutex_unlock(&mutex);
-    return failure;
+    return fail;
 }
 
 /*
@@ -136,10 +135,9 @@ int pool_submit(void (*f)(void *p), void *p)
  */
 void pool_init(void)
 {
-
     pthread_mutex_init(&mutex,0);
     sem_unlink("sem");
-    sem = sem_open("sem",O_CREAT,0644,0);
+    sem = sem_open("sem",O_CREAT,0666,0);
     for(int i=0;i<NUMBER_OF_BEES;i++){
         pthread_create(&bee[i],NULL,worker,NULL);
     }

@@ -3,9 +3,8 @@
 # makefile for thread pool
 #
 
-CC=gcc
+CC=gcc -v
 CFLAGS=-Wall
-PTHREADS=-lpthread
 
 all: client.o threadpool.o
 	$(CC) $(CFLAGS) -o client client.o threadpool.o $(PTHREADS)
