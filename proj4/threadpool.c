@@ -52,13 +52,12 @@ static int enqueue(task_t t){
         head = tail = 0;
         worktodo[tail] = t;
         queue_size++;
-        sem_post(sem);
     }
     else if(0<queue_size &&queue_size < QUEUE_SIZE){
         tail = (tail+1) % QUEUE_SIZE;
         worktodo[tail] = t;
         queue_size++;
-        sem_post(sem);
+
     }
     else{
         //큐가 꽉 찬 경우
@@ -126,6 +125,9 @@ int pool_submit(void (*f)(void *p), void *p)
     task->function = f;
     task->data = p;
     fail = enqueue(*task);
+    if(!fail){
+        sem_post(sem);
+    }
     pthread_mutex_unlock(&mutex);
     return fail;
 }
